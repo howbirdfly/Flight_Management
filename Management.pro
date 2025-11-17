@@ -10,14 +10,26 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+<<<<<<< HEAD
+=======
+    maininterface.cpp \
+>>>>>>> howbirdfly/feature
     mainwindow.cpp \
     sign_in.cpp
 
 HEADERS += \
+<<<<<<< HEAD
+=======
+    maininterface.h \
+>>>>>>> howbirdfly/feature
     mainwindow.h \
     sign_in.h
 
 FORMS += \
+<<<<<<< HEAD
+=======
+    maininterface.ui \
+>>>>>>> howbirdfly/feature
     mainwindow.ui \
     sign_in.ui
 

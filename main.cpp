@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     dbcon.setDatabaseName("root");           // ODBC 数据源名称
     bool ok = dbcon.open();
     if(!ok)
-        qDebug() << "Error,  persondatabase 数据库文件打开失败！";
+        qDebug() << "Error,  persondatabase 数据库文件打开失败!";
     else
-        qDebug() << "Sucess, persondatabase 数据库文件打开成功！";
+        qDebug() << "Sucess, persondatabase 数据库文件打开成功!";
 
     MainWindow w;
     w.show();

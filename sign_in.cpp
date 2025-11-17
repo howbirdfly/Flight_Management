@@ -20,7 +20,7 @@ Sign_in::~Sign_in()
 
 bool checkUsername(QString &username){
     if (!QSqlDatabase::database().isOpen()) {
-        qDebug() << "数据库未连接，无法检查用户名！";
+        qDebug() << "数据库未连接，无法检查用户名!";
         return false;
     }
     QSqlQuery query;
@@ -28,8 +28,8 @@ bool checkUsername(QString &username){
     query.prepare(sql);
     query.addBindValue(username);
     if (!query.exec()) {
-        qDebug() << "检查用户名失败：" << query.lastError().text();
-        return true;
+        qDebug() << "检查用户名失败:" << query.lastError().text();
+        return  true;
     }
     if (query.next()) {
         return true;
@@ -44,20 +44,20 @@ void Sign_in::on_Sign_in_Button_clicked()
     QString password=ui->Sign_in_PassWordT->text().trimmed();
     QString passwordA=ui->Sign_in_PassWordAT->text().trimmed();
     if(username.isEmpty()||password.isEmpty()){
-        QMessageBox::warning(this, "提示", "用户名或密码不能为空！");
+        QMessageBox::warning(this, "提示", "用户名或密码不能为空!");
         return;
     }
     if(passwordA.isEmpty()){
-        QMessageBox::warning(this,"提示","请确认密码");
+        QMessageBox::warning(this,"提示","请确认密码!");
         return;
     }
     if(passwordA!=password){
-        QMessageBox::warning(this,"提示","请确认两次密码是否一致");
+        QMessageBox::warning(this, "提示", "请确认两次密码是否一致!");
         return;
     }
 
     if (checkUsername(username)) {
-        QMessageBox::warning(this, "提示", "该用户名已被注册，请更换！");
+        QMessageBox::warning(this, "提示", "该用户名已被注册，请更换!");
         return;
     }
     QSqlQuery query;
@@ -67,11 +67,11 @@ void Sign_in::on_Sign_in_Button_clicked()
     query.addBindValue(password);
 
     if (query.exec()) {
-        QMessageBox::information(this, "成功", "注册成功！");
+        QMessageBox::information(this, "成功", "注册成功!");
         this->close();
     } else {
-        QMessageBox::critical(this, "错误", "注册失败：" + query.lastError().text());
-        qDebug() << "插入失败：" << query.lastError().text();
+        QMessageBox::critical(this, "错误", "注册失败:" + query.lastError().text());
+        qDebug() << "插入失败:" << query.lastError().text();
     }
 }
 

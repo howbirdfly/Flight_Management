@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "maininterface.h"
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QDebug>
@@ -11,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    MainInterface* a=new MainInterface();
+    a->show();
 }
 MainWindow::~MainWindow()
 {
@@ -31,17 +34,17 @@ void ConnectDatabase(){
     if (!dbcon.isOpen()) {
         bool ok = dbcon.open();
         if (ok) {
-            qDebug() << "数据库连接成功！";
+            qDebug() << "数据库连接成功!";
         } else {
             qDebug() << "数据库连接失败：" << dbcon.lastError().text();
         }
     } else {
-        qDebug() << "数据库已连接！";
+        qDebug() << "数据库已连接!";
     }
 }
 bool checkUser(QString &username,QString &password){
     if (!QSqlDatabase::database().isOpen()) {
-        qDebug() << "请先连接数据库！";
+        qDebug() << "请先连接数据库!";
         return false;
     }
     QSqlQuery query;
@@ -50,7 +53,7 @@ bool checkUser(QString &username,QString &password){
     query.addBindValue(username);
     query.addBindValue(password);
     if (!query.exec()) {
-        qDebug() << "查询失败：" << query.lastError().text();
+        qDebug() << "查询失败:" << query.lastError().text();
         return false;
     }
     return query.next();
@@ -60,16 +63,17 @@ void MainWindow::on_log_in_clicked()
     QString username=ui->Usernamet->text().trimmed();
     QString password=ui->Passwordt->text().trimmed();
     if(username.isEmpty()||password.isEmpty()){
-        QMessageBox::warning(this, "提示", "用户名或密码不能为空！");
+        QMessageBox::warning(this, "提示", "用户名或密码不能为空!");
         return;
     }
     ConnectDatabase();
     bool ok=checkUser(username,password);
     if(ok){
-        QMessageBox::information(this, "成功", "登录成功！");
+        QMessageBox::information(this, "成功", "登录成功!");
     }
     else{
-        QMessageBox::warning(this, "失败", "用户名或密码错误！");
+        QMessageBox::warning(this, "失败", "用户名或密码错误!");
+
     }
 }
 void MainWindow::on_sign_in_clicked()
