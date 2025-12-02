@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>edit_infor</class>
- <widget class="QDialog" name="edit_infor">
+ <class>edit_info</class>
+ <widget class="QDialog" name="edit_info">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>380</height>
+    <width>634</width>
+    <height>361</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,78 +16,79 @@
   <property name="styleSheet">
    <string notr="true">/* ================= 全局窗口设置 ================= */
 QDialog {
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #ffffff;   /* 白底 */
+    color: #333333;              /* 深灰色字体 (比纯黑更柔和) */
     font-family: &quot;Microsoft YaHei&quot;, &quot;Segoe UI&quot;, sans-serif;
 }
 
 /* ================= 标签 (Label) 样式 ================= */
 QLabel {
-    color: #333333;
+    color: #333333;              /* 标签文字颜色 */
     font-size: 14px;
-    font-weight: bold;
-    background: transparent;
-    border: none;
+    font-weight: bold;           /* 加粗，提升辨识度 */
+    background: transparent;     /* 背景透明 */
 }
 
 /* ================= 输入框 (LineEdit) 样式 ================= */
 QLineEdit {
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    color: #000000;
-    padding: 5px 8px;
+    background-color: #f7f7f7;   /* 极浅灰色背景，区分白色底板 */
+    border: 1px solid #cccccc;   /* 浅灰色边框 */
+    border-radius: 4px;          /* 4px 圆角 */
+    color: #000000;              /* 输入内容为纯黑 */
+    padding: 5px 8px;            /* 增加一点内边距，文字不拥挤 */
     font-size: 14px;
 }
 
+/* 输入框获得焦点（鼠标点进去）时的样式 */
 QLineEdit:focus {
-    border: 1px solid #0078d7;
+    background-color: #ffffff;   /* 选中时背景变白 */
+    border: 1px solid #0078d7;   /* 边框变为亮蓝色 */
 }
 
-/* 只读输入框样式 */
+/* 针对只读输入框（如原用户名）的样式 */
 QLineEdit[readOnly=&quot;true&quot;] {
-    background-color: #f7f7f7;
-    color: #555555;
+    background-color: #eeeeee;   /* 灰色背景表示不可编辑 */
+    color: #888888;              /* 文字变淡 */
     border: 1px solid #dddddd;
 }
 
 /* ================= 按钮 (PushButton) 样式 ================= */
 QPushButton {
-    background-color: #ffffff;
-    border: 1px solid #dcdcdc;
-    border-bottom: 2px solid #b0b0b0;
-    border-radius: 6px;
-    color: #333333;
+    background-color: #ffffff;   /* 按钮白底 */
+    border: 1px solid #dcdcdc;   /* 灰色细边框 */
+    border-bottom: 2px solid #b0b0b0; /* 底部加粗，模拟立体感 */
+    border-radius: 6px;          /* 圆角按钮 */
+    color: #333333;              /* 按钮文字 */
     font-size: 14px;
     padding: 6px 16px;
 }
 
+/* 鼠标悬停在按钮上 */
 QPushButton:hover {
-    background-color: #f0f8ff;
-    border-color: #0078d7;
-    color: #0078d7;
+    background-color: #f0f8ff;   /* 微微变蓝的背景 */
+    border-color: #0078d7;       /* 边框变蓝 */
+    color: #0078d7;              /* 文字变蓝 */
 }
 
+/* 鼠标按下按钮 */
 QPushButton:pressed {
-    background-color: #e0e0e0;
-    border-top: 2px solid #b0b0b0;
-    border-bottom: none;
-    padding-top: 8px;
+    background-color: #e0e0e0;   /* 按下背景变深 */
+    border-top: 2px solid #b0b0b0; /* 模拟按压凹陷效果 */
+    border-bottom: none;         /* 去掉底部立体边框 */
+    padding-top: 8px;            /* 文字下移，产生按压动效 */
     padding-bottom: 4px;
 }
 
-/* ================= 头像预览框样式 ================= */
-QLabel#label_5 {
-    background-color: #f0f0f0;
-    border: 2px solid #dcdcdc;
-    border-radius: 8px;
+/* 针对“确认/取消”按钮盒子的特殊微调（可选） */
+QDialogButtonBox QPushButton {
+    min-width: 60px;             /* 保证按钮不要太窄 */
 }</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>310</y>
+     <x>240</x>
+     <y>290</y>
      <width>211</width>
      <height>32</height>
     </rect>
@@ -102,7 +103,7 @@ QLabel#label_5 {
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>160</x>
      <y>50</y>
      <width>111</width>
      <height>19</height>
@@ -115,10 +116,10 @@ QLabel#label_5 {
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>45</y>
-     <width>161</width>
-     <height>32</height>
+     <x>260</x>
+     <y>50</y>
+     <width>191</width>
+     <height>28</height>
     </rect>
    </property>
    <property name="text">
@@ -128,7 +129,7 @@ QLabel#label_5 {
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>160</x>
      <y>100</y>
      <width>69</width>
      <height>19</height>
@@ -141,56 +142,28 @@ QLabel#label_5 {
   <widget class="QLineEdit" name="old_name">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>95</y>
-     <width>221</width>
+     <x>260</x>
+     <y>100</y>
+     <width>191</width>
      <height>31</height>
     </rect>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::FocusPolicy::NoFocus</enum>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
-   </property>
-   <property name="placeholderText">
-    <string>当前用户名</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>160</y>
-     <width>69</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
-   <property name="text">
-    <string>新用户名：</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="new_name">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>155</y>
-     <width>221</width>
+     <x>260</x>
+     <y>150</y>
+     <width>191</width>
      <height>31</height>
     </rect>
-   </property>
-   <property name="placeholderText">
-    <string>请输入新的用户名</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>220</y>
+     <x>160</x>
+     <y>200</y>
      <width>69</width>
      <height>19</height>
     </rect>
@@ -202,30 +175,24 @@ QLabel#label_5 {
   <widget class="QLineEdit" name="new_jianjie">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>215</y>
-     <width>221</width>
-     <height>31</height>
+     <x>260</x>
+     <y>200</y>
+     <width>191</width>
+     <height>27</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_newname">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>45</y>
-     <width>131</width>
-     <height>160</height>
+     <x>160</x>
+     <y>150</y>
+     <width>69</width>
+     <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>头像预览</string>
-   </property>
-   <property name="scaledContents">
-    <bool>false</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignmentFlag::AlignCenter</set>
+    <string>新用户名：</string>
    </property>
   </widget>
  </widget>
@@ -234,32 +201,32 @@ QLabel#label_5 {
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>edit_infor</receiver>
+   <receiver>edit_info</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>248</x>
+     <y>254</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>157</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>edit_infor</receiver>
+   <receiver>edit_info</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>316</x>
+     <y>260</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>286</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>

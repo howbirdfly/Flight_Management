@@ -8,6 +8,11 @@
 #include <QDateTime>
 #include <QRandomGenerator>
 
+OrderDialog::~OrderDialog()
+{
+    delete ui;
+}
+
 OrderDialog::OrderDialog(int ticketId, int userId, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::OrderDialog)
@@ -18,38 +23,24 @@ OrderDialog::OrderDialog(int ticketId, int userId, QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("填写订单信息");
     setModal(true);
-    
+
     loadTicketInfo();
     ui->spinBox_count->setMinimum(1);
     ui->spinBox_count->setMaximum(10);
     ui->spinBox_count->setValue(1);
-    
-    connect(ui->spinBox_count, QOverload<int>::of(&QSpinBox::valueChanged), 
-            this, &OrderDialog::on_spinBox_count_valueChanged);
-}
 
-OrderDialog::~OrderDialog()
-{
-    delete ui;
+    connect(ui->spinBox_count, QOverload<int>::of(&QSpinBox::valueChanged),
+            this, &OrderDialog::on_spinBox_count_valueChanged);
 }
 
 void OrderDialog::loadTicketInfo()
 {
-<<<<<<< HEAD
-    if (!QSqlDatabase::database().isOpen()) {
-=======
     QSqlDatabase db = QSqlDatabase::database();
     if (!db.isOpen()) {
->>>>>>> 269024b (完全修复了更换头像功能)
         QMessageBox::warning(this, "错误", "数据库未连接！");
         return;
     }
-
-<<<<<<< HEAD
-    QSqlQuery query;
-=======
-    QSqlQuery query(db);  // 显式指定数据库连接
->>>>>>> 269024b (完全修复了更换头像功能)
+    QSqlQuery query(db);
     query.prepare("SELECT TicketType, TicketNo, DepartureCity, ArrivalCity, "
                   "DepartureTime, ArrivalTime, Price, AvailableSeats, Company "
                   "FROM tickets WHERE TicketID = ?");
@@ -63,25 +54,24 @@ void OrderDialog::loadTicketInfo()
 
     QString ticketType = query.value(0).toString();
     QString typeName = ticketType == "Flight" ? "航班" : (ticketType == "Train" ? "火车" : "汽车");
-    
+
     ui->label_type->setText(typeName);
     ui->label_ticketNo->setText(query.value(1).toString());
     ui->label_route->setText(query.value(2).toString() + " → " + query.value(3).toString());
-    
+
     QDateTime depTime = query.value(4).toDateTime();
     QDateTime arrTime = query.value(5).toDateTime();
     ui->label_departure->setText(depTime.toString("yyyy-MM-dd hh:mm"));
     ui->label_arrival->setText(arrTime.toString("yyyy-MM-dd hh:mm"));
-    
+
     ticketPrice = query.value(6).toDouble();
     ui->label_price->setText(QString::number(ticketPrice, 'f', 2) + " 元");
     ui->label_available->setText(QString::number(query.value(7).toInt()) + " 张");
     ui->label_company->setText(query.value(8).toString());
-    
+
     ui->spinBox_count->setMaximum(query.value(7).toInt());
     calculateTotal();
 }
-
 void OrderDialog::on_spinBox_count_valueChanged(int count)
 {
     Q_UNUSED(count);
@@ -94,7 +84,6 @@ void OrderDialog::calculateTotal()
     double total = ticketPrice * count;
     ui->label_total->setText(QString::number(total, 'f', 2) + " 元");
 }
-<<<<<<< HEAD
 //检测时间是否冲突
 bool OrderDialog::checkTimeConflict(const QString&passengerIDCard,int newTicketId){
     if(passengerIDCard.isEmpty()){
@@ -232,9 +221,6 @@ QString OrderDialog:: getConflictDetails(const QString &passengerIDCard, int new
 
     return "";
 }
-=======
-
->>>>>>> 269024b (完全修复了更换头像功能)
 void OrderDialog::on_btn_confirm_clicked()
 {
     QString passengerName = ui->lineEdit_name->text().trimmed();
@@ -250,21 +236,16 @@ void OrderDialog::on_btn_confirm_clicked()
         QMessageBox::warning(this, "提示", "请输入联系电话！");
         return;
     }
-<<<<<<< HEAD
     if (passengerID.length() != 18) {
         QMessageBox::warning(this, "提示", "请输入18位身份证号码！");
         ui->lineEdit_id->setFocus();
         ui->lineEdit_id->selectAll();
         return;
     }
-=======
-
->>>>>>> 269024b (完全修复了更换头像功能)
     if (!QSqlDatabase::database().isOpen()) {
         QMessageBox::warning(this, "错误", "数据库未连接！");
         return;
     }
-<<<<<<< HEAD
     //行程是否冲突
     if (checkTimeConflict(passengerID, ticketId)) {
         QString conflictDetails = getConflictDetails(passengerID, ticketId);
@@ -293,14 +274,11 @@ void OrderDialog::on_btn_confirm_clicked()
         QMessageBox::warning(this, "行程冲突", message);
         return;
     }
-    // 检查可用座位数
-    QSqlQuery checkQuery;
-=======
 
     // 检查可用座位数
     QSqlDatabase db = QSqlDatabase::database();
-    QSqlQuery checkQuery(db);  // 显式指定数据库连接
->>>>>>> 269024b (完全修复了更换头像功能)
+    // 修复：删除重复声明
+    QSqlQuery checkQuery(db);
     checkQuery.prepare("SELECT AvailableSeats FROM tickets WHERE TicketID = ?");
     checkQuery.addBindValue(ticketId);
     if (!checkQuery.exec() || !checkQuery.next()) {
@@ -314,22 +292,19 @@ void OrderDialog::on_btn_confirm_clicked()
     }
 
     // 生成订单号
-    QString orderNo = "ORD" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") + 
+    QString orderNo = "ORD" + QDateTime::currentDateTime().toString("yyyyMMddHHmmss") +
                       QString::number(QRandomGenerator::global()->bounded(1000000), 10).rightJustified(6, '0');
 
     // 开始事务
-    QSqlDatabase::database().transaction();
+    db.transaction();
 
     try {
         // 插入订单
-<<<<<<< HEAD
-        QSqlQuery insertQuery;
-=======
-        QSqlQuery insertQuery(db);  // 显式指定数据库连接
->>>>>>> 269024b (完全修复了更换头像功能)
+        // 修复：删除重复声明
+        QSqlQuery insertQuery(db);
         insertQuery.prepare("INSERT INTO orders (UserID, TicketID, OrderNo, PassengerName, "
-                           "PassengerIDCard, ContactPhone, TicketCount, TotalPrice, OrderStatus) "
-                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Paid')");
+                            "PassengerIDCard, ContactPhone, TicketCount, TotalPrice, OrderStatus) "
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'Paid')");
         insertQuery.addBindValue(userId);
         insertQuery.addBindValue(ticketId);
         insertQuery.addBindValue(orderNo);
@@ -340,43 +315,34 @@ void OrderDialog::on_btn_confirm_clicked()
         insertQuery.addBindValue(ticketPrice * count);
 
         if (!insertQuery.exec()) {
-            QSqlDatabase::database().rollback();
+            db.rollback();
             QMessageBox::critical(this, "错误", "创建订单失败：" + insertQuery.lastError().text());
             return;
         }
 
         // 更新票务可用座位数
-<<<<<<< HEAD
-        QSqlQuery updateQuery;
-=======
-        QSqlQuery updateQuery(db);  // 显式指定数据库连接
->>>>>>> 269024b (完全修复了更换头像功能)
+        // 修复：删除重复声明
+        QSqlQuery updateQuery(db);
         updateQuery.prepare("UPDATE tickets SET AvailableSeats = AvailableSeats - ? WHERE TicketID = ?");
         updateQuery.addBindValue(count);
         updateQuery.addBindValue(ticketId);
 
         if (!updateQuery.exec()) {
-            QSqlDatabase::database().rollback();
+            db.rollback();
             QMessageBox::critical(this, "错误", "更新座位失败：" + updateQuery.lastError().text());
             return;
         }
 
         // 提交事务
-        QSqlDatabase::database().commit();
+        db.commit();
         QMessageBox::information(this, "成功", QString("订单创建成功！\n订单号：%1").arg(orderNo));
         accept();
     } catch (...) {
-        QSqlDatabase::database().rollback();
+        db.rollback();
         QMessageBox::critical(this, "错误", "订票过程中发生错误！");
     }
 }
-
 void OrderDialog::on_btn_cancel_clicked()
 {
     reject();
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 269024b (完全修复了更换头像功能)

@@ -27,10 +27,11 @@ QWidget {
 }
 
 QWidget#UserProfile {
-    background-color: #2d2d2d; /* 全局深色背景 */
+    background-color: #2d2d2d;
+    /* 全局深色背景 */
 }
 
-/* ================= 按钮统一风格 (复用 deal.ui 样式) ================= */
+/* ================= 按钮统一风格 ================= */
 QPushButton {
     background-color: #606060;
     border: 1px solid #ffffff;
@@ -48,12 +49,12 @@ QPushButton:hover {
 }
 
 QPushButton:pressed {
-    background-color: #404040;      
-    border: 1px solid #555555;     
-    padding-left: 10px;            
-    padding-top: 10px;               
-    padding-right: 6px;           
-    padding-bottom: 6px;             
+    background-color: #404040;
+    border: 1px solid #555555;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 6px;
+    padding-bottom: 6px;
 
     box-shadow: inset 4px 4px 8px #202020,
                 inset -4px -4px 8px #505050;
@@ -140,6 +141,10 @@ QLineEdit[readOnly=&quot;true&quot;] {
       <height>30</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+    </property>
     <property name="text">
      <string>返回</string>
     </property>
@@ -159,11 +164,9 @@ QLineEdit[readOnly=&quot;true&quot;] {
    </property>
    <property name="frameShape">
     <enum>QFrame::Shape::StyledPanel</enum>
-    <enum>QFrame::StyledPanel</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
-    <enum>QFrame::Raised</enum>
    </property>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
@@ -267,11 +270,9 @@ QLineEdit[readOnly=&quot;true&quot;] {
    </property>
    <property name="frameShape">
     <enum>QFrame::Shape::StyledPanel</enum>
-    <enum>QFrame::StyledPanel</enum>
    </property>
    <property name="frameShadow">
     <enum>QFrame::Shadow::Raised</enum>
-    <enum>QFrame::Raised</enum>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
@@ -305,7 +306,7 @@ QLineEdit[readOnly=&quot;true&quot;] {
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="btn_favorites">
        <property name="text">
         <string>收藏</string>
        </property>
@@ -318,11 +319,8 @@ QLineEdit[readOnly=&quot;true&quot;] {
      <rect>
       <x>630</x>
       <y>40</y>
-      <x>590</x>
-      <y>30</y>
       <width>271</width>
       <height>311</height>
-      <height>351</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -361,4 +359,3 @@ QLineEdit[readOnly=&quot;true&quot;] {
  <resources/>
  <connections/>
 </ui>
-
