@@ -44,7 +44,7 @@ void Single_Center::initTable()
     ui->tableWidget_orders->setColumnCount(9);
     QStringList headers;
     headers << "订单号" << "票务类型" << "路线" << "出发时间" << "到达时间"
-            << "数量" << "总价(元)" << "状态" << "操作";
+            << "数量" << "总价(元)" << "状态" << "操作"<<"收藏";
     ui->tableWidget_orders->setHorizontalHeaderLabels(headers);
     ui->tableWidget_orders->horizontalHeader()->setStretchLastSection(true);
     ui->tableWidget_orders->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -246,7 +246,6 @@ void Single_Center::onDeleteOrder()
     }
 
     // 获取订单信息
-    // 修复：删除重复声明
     QSqlQuery orderQuery(db);
     orderQuery.prepare("SELECT TicketID, TicketCount FROM orders WHERE OrderID = ?");
     orderQuery.addBindValue(orderId);
@@ -260,7 +259,6 @@ void Single_Center::onDeleteOrder()
 
     try {
         // 更新订单状态
-        // 修复：删除重复声明
         QSqlQuery updateOrderQuery(db);
         updateOrderQuery.prepare("UPDATE orders SET OrderStatus = 'Cancelled' WHERE OrderID = ?");
         updateOrderQuery.addBindValue(orderId);
