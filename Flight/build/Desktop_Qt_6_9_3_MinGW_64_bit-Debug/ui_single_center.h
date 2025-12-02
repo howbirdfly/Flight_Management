@@ -42,8 +42,8 @@ public:
         font.setBold(true);
         label_title->setFont(font);
         label_title->setAutoFillBackground(false);
-        label_title->setStyleSheet(QString::fromUtf8("background-color: rgb(59, 59, 59); \n"
-"color: rgb(255, 255, 255); \n"
+        label_title->setStyleSheet(QString::fromUtf8("background-color: rgb(59, 59, 59);\n"
+"color: rgb(255, 255, 255);\n"
 "border-radius: 6px;          "));
         btn_refresh = new QPushButton(Single_Center);
         btn_refresh->setObjectName("btn_refresh");
@@ -56,27 +56,27 @@ public:
         tableWidget_orders->setStyleSheet(QString::fromUtf8("QTableView {\n"
 "    background-color: rgb(45, 45, 45);\n"
 "    color: #ffffff;\n"
-"    gridline-color: rgb(96, 96, 96); \n"
-"    border: 1px solid rgb(96, 96, 96); \n"
+"    gridline-color: rgb(96, 96, 96);\n"
+"    border: 1px solid rgb(96, 96, 96);\n"
 "}\n"
 "\n"
 "QHeaderView::section {\n"
-"    background-color: rgb(45, 45, 45); \n"
+"    background-color: rgb(45, 45, 45);\n"
 "    color: #ffffff;\n"
 "    padding: 4px;\n"
 "    font-weight: bold;\n"
 "    font-size: 13px;\n"
 "\n"
-"    border: none; \n"
+"    border: none;\n"
 "    border-right: 1px solid rgb(96, 96, 96);\n"
-"    border-bottom: 1px solid rgb(255, 255, 255); \n"
+"    border-bottom: 1px solid rgb(255, 255, 255);\n"
 "}\n"
 "\n"
 "QTableCornerButton::section {\n"
 "    background-color: rgb(45, 45, 45);\n"
 "    border: none;\n"
 "    border-right: 1px solid rgb(96, 96, 96);\n"
-"    border-bottom: 1px solid #rgb(96, 96, 96);\n"
+"    border-bottom: 1px solid rgb(96, 96, 96);\n"
 "}"));
         tableWidget_orders->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
         tableWidget_orders->setSelectionBehavior(QAbstractItemView::SelectionBehavior::SelectRows);

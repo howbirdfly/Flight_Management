@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Qt 用户配置文件
 *.pro.user
 *.pro.user.*
@@ -12,3 +13,29 @@ release/
 *.o
 *.obj
 *.exe
+=======
+# Qt 编译生成文件夹
+build/
+debug/
+release/
+Flight/build/
+
+# 编译中间文件
+*.o
+*.obj
+*.moc
+*.ui
+ui_*.h
+moc_*.cpp
+
+# 可执行文件
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 配置文件
+*.pro.user
+*.stash
+Makefile*
+>>>>>>> 8baf20252257e6424a56f672cef2e41d0128f62f

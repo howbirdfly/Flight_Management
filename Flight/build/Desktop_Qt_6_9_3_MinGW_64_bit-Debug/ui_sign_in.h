@@ -29,6 +29,8 @@ public:
     QLabel *Sign_in_PassWordA;
     QPushButton *Sign_in_Button;
     QPushButton *Sign_in_Cencel;
+    QLabel *label;
+    QLineEdit *ID;
 
     void setupUi(QWidget *Sign_in)
     {
@@ -40,25 +42,31 @@ public:
         Sign_in_UsernameT->setGeometry(QRect(260, 90, 171, 27));
         Sign_in_PassWordT = new QLineEdit(Sign_in);
         Sign_in_PassWordT->setObjectName("Sign_in_PassWordT");
-        Sign_in_PassWordT->setGeometry(QRect(260, 130, 171, 27));
+        Sign_in_PassWordT->setGeometry(QRect(260, 170, 171, 27));
         Sign_in_PassWordAT = new QLineEdit(Sign_in);
         Sign_in_PassWordAT->setObjectName("Sign_in_PassWordAT");
-        Sign_in_PassWordAT->setGeometry(QRect(260, 180, 171, 27));
+        Sign_in_PassWordAT->setGeometry(QRect(260, 220, 171, 27));
         Sign_in_Username = new QLabel(Sign_in);
         Sign_in_Username->setObjectName("Sign_in_Username");
         Sign_in_Username->setGeometry(QRect(170, 90, 69, 19));
         Sign_in_PassWord = new QLabel(Sign_in);
         Sign_in_PassWord->setObjectName("Sign_in_PassWord");
-        Sign_in_PassWord->setGeometry(QRect(170, 140, 69, 19));
+        Sign_in_PassWord->setGeometry(QRect(180, 180, 69, 19));
         Sign_in_PassWordA = new QLabel(Sign_in);
         Sign_in_PassWordA->setObjectName("Sign_in_PassWordA");
-        Sign_in_PassWordA->setGeometry(QRect(160, 190, 69, 19));
+        Sign_in_PassWordA->setGeometry(QRect(160, 230, 69, 19));
         Sign_in_Button = new QPushButton(Sign_in);
         Sign_in_Button->setObjectName("Sign_in_Button");
         Sign_in_Button->setGeometry(QRect(180, 270, 99, 28));
         Sign_in_Cencel = new QPushButton(Sign_in);
         Sign_in_Cencel->setObjectName("Sign_in_Cencel");
         Sign_in_Cencel->setGeometry(QRect(350, 270, 99, 28));
+        label = new QLabel(Sign_in);
+        label->setObjectName("label");
+        label->setGeometry(QRect(170, 130, 69, 19));
+        ID = new QLineEdit(Sign_in);
+        ID->setObjectName("ID");
+        ID->setGeometry(QRect(260, 130, 171, 27));
 
         retranslateUi(Sign_in);
 
@@ -69,6 +77,7 @@ public:
     {
         Sign_in->setWindowTitle(QCoreApplication::translate("Sign_in", "\346\263\250\345\206\214", nullptr));
         Sign_in_UsernameT->setPlaceholderText(QCoreApplication::translate("Sign_in", "\350\257\267\350\276\223\345\205\245\344\275\240\347\232\204\347\224\250\346\210\267\345\220\215...", nullptr));
+        Sign_in_PassWordT->setInputMask(QString());
         Sign_in_PassWordT->setPlaceholderText(QCoreApplication::translate("Sign_in", "\350\257\267\350\276\223\345\205\245\344\275\240\347\232\204\345\257\206\347\240\201...", nullptr));
         Sign_in_PassWordAT->setPlaceholderText(QCoreApplication::translate("Sign_in", "\350\257\267\347\241\256\350\256\244\344\275\240\347\232\204\345\257\206\347\240\201...", nullptr));
         Sign_in_Username->setText(QCoreApplication::translate("Sign_in", "\347\224\250\346\210\267\345\220\215\357\274\232", nullptr));
@@ -76,6 +85,9 @@ public:
         Sign_in_PassWordA->setText(QCoreApplication::translate("Sign_in", "\347\241\256\350\256\244\345\257\206\347\240\201\357\274\232", nullptr));
         Sign_in_Button->setText(QCoreApplication::translate("Sign_in", "\346\263\250\345\206\214", nullptr));
         Sign_in_Cencel->setText(QCoreApplication::translate("Sign_in", "\345\217\226\346\266\210", nullptr));
+        label->setText(QCoreApplication::translate("Sign_in", "\350\264\246\346\210\267ID\357\274\232", nullptr));
+        ID->setInputMask(QString());
+        ID->setPlaceholderText(QCoreApplication::translate("Sign_in", "ID\344\270\272\350\264\246\345\217\267\347\232\204\345\224\257\344\270\200\345\207\255\350\257\201", nullptr));
     } // retranslateUi
 
 };

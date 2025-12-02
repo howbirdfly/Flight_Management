@@ -34,10 +34,10 @@ public:
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_5;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
-    QLineEdit *lineEdit_3;
-    QLineEdit *lineEdit_4;
+    QLineEdit *txt_Username;
+    QLineEdit *txt_UserAccount;
+    QLineEdit *txt_jianjie;
+    QLineEdit *txt_yu;
     QLabel *label_6;
     QFrame *frame_2;
     QWidget *verticalLayoutWidget;
@@ -45,12 +45,13 @@ public:
     QPushButton *pushButton_5;
     QPushButton *pushButton_4;
     QPushButton *pushButton_6;
-    QPushButton *pushButton_2;
+    QPushButton *btn_favorites;
     QWidget *verticalLayoutWidget_2;
     QVBoxLayout *verticalLayout_2;
     QPushButton *pushButton_8;
     QPushButton *pushButton_7;
     QPushButton *pushButton_9;
+    QPushButton *pushButton_10;
 
     void setupUi(QWidget *UserProfile)
     {
@@ -66,10 +67,11 @@ public:
 "}\n"
 "\n"
 "QWidget#UserProfile {\n"
-"    background-color: #2d2d2d; /* \345\205\250\345\261\200\346\267\261\350\211\262\350\203\214\346\231\257 */\n"
+"    background-color: #2d2d2d;\n"
+"    /* \345\205\250\345\261\200\346\267\261\350\211\262\350\203\214\346\231\257 */\n"
 "}\n"
 "\n"
-"/* ================= \346\214\211\351\222\256\347\273\237\344\270\200\351\243\216\346\240\274 (\345\244\215\347\224\250 deal.ui \346\240\267\345\274\217) ================= */\n"
+"/* ================= \346\214\211\351\222\256\347\273\237\344\270\200\351\243\216\346\240\274 ================= */\n"
 "QPushButton {\n"
 "    background-color: #606060;\n"
 "    border: 1px solid #ffffff;\n"
@@ -83,17 +85,17 @@ public:
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-""
-                        "    background-color: #646464;\n"
+"    background-color: #646464;\n"
 "}\n"
 "\n"
-"QPushButton:pressed {\n"
-"    background-color: #404040;      \n"
-"    border: 1px solid #555555;     \n"
-"    padding-left: 10px;            \n"
-"    padding-top: 10px;               \n"
-"    padding-right: 6px;           \n"
-"    padding-bottom: 6px;             \n"
+"QP"
+                        "ushButton:pressed {\n"
+"    background-color: #404040;\n"
+"    border: 1px solid #555555;\n"
+"    padding-left: 10px;\n"
+"    padding-top: 10px;\n"
+"    padding-right: 6px;\n"
+"    padding-bottom: 6px;\n"
 "\n"
 "    box-shadow: inset 4px 4px 8px #202020,\n"
 "                inset -4px -4px 8px #505050;\n"
@@ -119,9 +121,9 @@ public:
 "    border: 1px solid #555555;\n"
 "}\n"
 "\n"
-""
-                        "/* ================= \344\270\252\344\272\272\344\277\241\346\201\257\345\214\272 ================= */\n"
-"/* \345\244\264\345\203\217\346\241\206 */\n"
+"/* ================= \344\270\252\344\272\272\344\277\241\346\201\257\345\214\272 ================= */\n"
+"/* "
+                        "\345\244\264\345\203\217\346\241\206 */\n"
 "QLabel#label_2 {\n"
 "    background-color: #505050;\n"
 "    border-radius: 35px;\n"
@@ -156,6 +158,8 @@ public:
         btn_back = new QPushButton(widget);
         btn_back->setObjectName("btn_back");
         btn_back->setGeometry(QRect(880, 5, 80, 30));
+        btn_back->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);"));
         frame = new QFrame(UserProfile);
         frame->setObjectName("frame");
         frame->setGeometry(QRect(10, 60, 981, 181));
@@ -166,6 +170,7 @@ public:
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(130, 20, 121, 141));
         label_2->setStyleSheet(QString::fromUtf8("background-color: #505050;"));
+        label_2->setScaledContents(true);
         formLayoutWidget = new QWidget(frame);
         formLayoutWidget->setObjectName("formLayoutWidget");
         formLayoutWidget->setGeometry(QRect(570, 40, 291, 121));
@@ -187,29 +192,29 @@ public:
 
         formLayout->setWidget(1, QFormLayout::ItemRole::LabelRole, label_5);
 
-        lineEdit = new QLineEdit(formLayoutWidget);
-        lineEdit->setObjectName("lineEdit");
-        lineEdit->setReadOnly(true);
+        txt_Username = new QLineEdit(formLayoutWidget);
+        txt_Username->setObjectName("txt_Username");
+        txt_Username->setReadOnly(true);
 
-        formLayout->setWidget(0, QFormLayout::ItemRole::FieldRole, lineEdit);
+        formLayout->setWidget(0, QFormLayout::ItemRole::FieldRole, txt_Username);
 
-        lineEdit_2 = new QLineEdit(formLayoutWidget);
-        lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setReadOnly(true);
+        txt_UserAccount = new QLineEdit(formLayoutWidget);
+        txt_UserAccount->setObjectName("txt_UserAccount");
+        txt_UserAccount->setReadOnly(true);
 
-        formLayout->setWidget(1, QFormLayout::ItemRole::FieldRole, lineEdit_2);
+        formLayout->setWidget(1, QFormLayout::ItemRole::FieldRole, txt_UserAccount);
 
-        lineEdit_3 = new QLineEdit(formLayoutWidget);
-        lineEdit_3->setObjectName("lineEdit_3");
-        lineEdit_3->setReadOnly(true);
+        txt_jianjie = new QLineEdit(formLayoutWidget);
+        txt_jianjie->setObjectName("txt_jianjie");
+        txt_jianjie->setReadOnly(true);
 
-        formLayout->setWidget(2, QFormLayout::ItemRole::FieldRole, lineEdit_3);
+        formLayout->setWidget(2, QFormLayout::ItemRole::FieldRole, txt_jianjie);
 
-        lineEdit_4 = new QLineEdit(formLayoutWidget);
-        lineEdit_4->setObjectName("lineEdit_4");
-        lineEdit_4->setReadOnly(true);
+        txt_yu = new QLineEdit(formLayoutWidget);
+        txt_yu->setObjectName("txt_yu");
+        txt_yu->setReadOnly(true);
 
-        formLayout->setWidget(3, QFormLayout::ItemRole::FieldRole, lineEdit_4);
+        formLayout->setWidget(3, QFormLayout::ItemRole::FieldRole, txt_yu);
 
         label_6 = new QLabel(formLayoutWidget);
         label_6->setObjectName("label_6");
@@ -243,10 +248,10 @@ public:
 
         verticalLayout->addWidget(pushButton_6);
 
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
-        pushButton_2->setObjectName("pushButton_2");
+        btn_favorites = new QPushButton(verticalLayoutWidget);
+        btn_favorites->setObjectName("btn_favorites");
 
-        verticalLayout->addWidget(pushButton_2);
+        verticalLayout->addWidget(btn_favorites);
 
         verticalLayoutWidget_2 = new QWidget(frame_2);
         verticalLayoutWidget_2->setObjectName("verticalLayoutWidget_2");
@@ -269,6 +274,11 @@ public:
 
         verticalLayout_2->addWidget(pushButton_9);
 
+        pushButton_10 = new QPushButton(verticalLayoutWidget_2);
+        pushButton_10->setObjectName("pushButton_10");
+
+        verticalLayout_2->addWidget(pushButton_10);
+
 
         retranslateUi(UserProfile);
 
@@ -288,10 +298,11 @@ public:
         pushButton_5->setText(QCoreApplication::translate("UserProfile", "\347\274\226\350\276\221\344\270\252\344\272\272\344\277\241\346\201\257", nullptr));
         pushButton_4->setText(QCoreApplication::translate("UserProfile", "\346\210\221\347\232\204\350\256\242\345\215\225", nullptr));
         pushButton_6->setText(QCoreApplication::translate("UserProfile", "\345\205\205\345\200\274", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("UserProfile", "\346\224\266\350\227\217", nullptr));
+        btn_favorites->setText(QCoreApplication::translate("UserProfile", "\346\224\266\350\227\217", nullptr));
         pushButton_8->setText(QCoreApplication::translate("UserProfile", "\346\263\250\345\206\214", nullptr));
         pushButton_7->setText(QCoreApplication::translate("UserProfile", "\347\231\273\345\275\225", nullptr));
         pushButton_9->setText(QCoreApplication::translate("UserProfile", "\346\263\250\351\224\200", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("UserProfile", "\344\271\230\345\256\242\344\277\241\346\201\257", nullptr));
     } // retranslateUi
 
 };

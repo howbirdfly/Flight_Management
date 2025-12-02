@@ -3,84 +3,141 @@
 #include "ui_userprofile.h"
 #include "sign_in.h"
 #include "edit_infor.h"
+#include "passenger.h"
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QPixmap>
+
 UserProfile::UserProfile(QWidget *parent)
-#include "passenger.h"
-UserProfile::UserProfile(const QString &username,QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::UserProfile)
-    , currentUsername(username)
-{
-    ui->setupUi(this);
-    connect(ui->btn_back, &QPushButton::clicked, this, &UserProfile::on_btn_back_clicked);
-}
-UserProfile::UserProfile(const QString &userID,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UserProfile)
 {
     ui->setupUi(this);
-    this->userID=userID;
     connect(ui->btn_back, &QPushButton::clicked, this, &UserProfile::on_btn_back_clicked);
 }
+
+
+UserProfile::UserProfile(const QString &userID, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::UserProfile)
+{
+    ui->setupUi(this);
+    this->userID = userID;
+    connect(ui->btn_back, &QPushButton::clicked, this, &UserProfile::on_btn_back_clicked);
+    if (!this->userID.isEmpty()) {
+        getData(this->userID);
+    }
+}
+
 UserProfile::~UserProfile()
 {
     delete ui;
 }
+
 void UserProfile::on_btn_back_clicked()
 {
-    emit backRequested(); // 发送信号通知主窗口切换回去
+    emit backRequested();
 }
+
 void UserProfile::on_pushButton_4_clicked()
 {
     emit myOrdersRequested();
 }
+
 void UserProfile::on_pushButton_8_clicked()
 {
     Sign_in *s = new Sign_in();
     s->show();
 }
+
 void UserProfile::on_pushButton_7_clicked()
 {
-    emit logoutRequested();
-}
-void UserProfile::on_pushButton_9_clicked()
-{
-    int ret = QMessageBox::question(this, "注销", "确定要退出登录吗？",
-                                    QMessageBox::Yes | QMessageBox::No);
+    QMessageBox msgBox(QMessageBox::Question, "取消登录", "确定要退出登录吗？",
+                       QMessageBox::Yes | QMessageBox::No, this);
+
+    msgBox.setStyleSheet(
+        "QMessageBox {"
+        "    background-color: white;"
+        "}"
+        "QLabel {"
+        "    color: black; "
+        "}"
+        "QPushButton {"
+        "    min-width: 80px; "
+        "   color:black;"
+        "   background-color:white;"
+        "   border: 1px solid black; "
+        "}"
+        );
+
+    int ret = msgBox.exec();
+
     if (ret == QMessageBox::Yes) {
         emit logoutRequested();
     }
 }
-void UserProfile:: on_pushButton_10_clicked(){
+
+void UserProfile::on_pushButton_9_clicked()
+{
+    QMessageBox msgBox(QMessageBox::Question, "注销", "确定要注销吗？",
+                       QMessageBox::Yes | QMessageBox::No, this);
+
+    msgBox.setStyleSheet(
+        "QMessageBox {"
+        "    background-color: white;"
+        "}"
+        "QLabel {"
+        "    color: black; "
+        "}"
+        "QPushButton {"
+        "    min-width: 80px;"
+        "   color:black;"
+        "   background-color:white; "
+        "   border: 1px solid black;"
+        "}"
+        );
+
+    int ret = msgBox.exec();
+
+    if (ret == QMessageBox::Yes) {
+        emit logoutRequested();
+    }
+}
+
+void UserProfile::on_pushButton_10_clicked(){
     passenger*s=new passenger(currentUsername);
     s->show();
+}
 
 void UserProfile::on_pushButton_5_clicked()
 {
-    edit_infor *e=new edit_infor(ui->txt_UserAccount->text(),ui->txt_Username->text(),this);
-    connect(e,&edit_infor::change_name,this,[this](QString old,QString name){
-        if (name==""){
-            ui->txt_Username->setText(old);
-        }else{
-            ui->txt_Username->setText(name);
-        }
+    edit_infor *e = new edit_infor(this->userID, ui->txt_Username->text(), this);
 
+    connect(e, &edit_infor::change_name, this, [this](QString old, QString name){
+        if (name == ""){
+            ui->txt_Username->setText(old);
+            this->currentUsername = name;
+        } else {
+            ui->txt_Username->setText(name);
+            this->currentUsername = old;
+        }
     });
-    connect(e,&edit_infor::change_jianjie,this,[this](QString old,QString jianjie){
-        if (jianjie==""){
+
+    connect(e, &edit_infor::change_jianjie, this, [this](QString old, QString jianjie){
+        if (jianjie == ""){
             ui->txt_jianjie->setText(old);
-        }else{
+        } else {
             ui->txt_jianjie->setText(jianjie);
         }
     });
-    connect(e,&edit_infor::change_avatar,this,[this](QPixmap pixmap){
+
+    connect(e, &edit_infor::change_avatar, this, [this](QPixmap pixmap){
         ui->label_2->setPixmap(pixmap);
     });
+
     connect(e, &QDialog::finished, this, [this]{
         this->show();
         if (!this->userID.isEmpty()) {
@@ -90,66 +147,74 @@ void UserProfile::on_pushButton_5_clicked()
     this->hide();
     e->exec();
 }
+
 void UserProfile::getData(const QString &userID)
 {
     qDebug() << "getData called with userID:" << userID;
-    if (userID.isEmpty()) {
-        qDebug() << "UserID is empty!";
-        return;
-    }
-    if (!QSqlDatabase::database().isOpen()) {
-        QMessageBox::warning(this, "错误", "数据库未连接！");
-        qDebug() << "数据库未连接！";
-        return;
-    }
-    QSqlQuery query;
-    query.prepare("SELECT Username, IDCard, jianjie,avatar FROM users WHERE UserID = ?");
-    query.addBindValue(userID);
-    qDebug() << "查询用户信息，UserID=" << userID;
-    if (query.exec() && query.next()) {
-        QString username = query.value(0).toString();
-        QString idCard = query.value(1).toString();
-        QString jianjie = query.value(2).toString();
-        QByteArray avatarData = query.value(3).toByteArray();
-        qDebug() << "读取到头像数据大小：" << avatarData.size() << "字节";
-        ui->txt_Username->setText(username);
-        ui->txt_UserAccount->setText(idCard);
-        ui->txt_jianjie->setText(jianjie);
-        if (!avatarData.isEmpty()) {
-            QPixmap pixmap;
-            if (pixmap.loadFromData(avatarData)) {
-                qDebug() << "成功加载头像，尺寸：" << pixmap.width() << "x" << pixmap.height();
-                ui->label_2->setPixmap(pixmap.scaled(ui->label_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    if (userID.isEmpty()) return;
+
+    QSqlDatabase db = QSqlDatabase::database();
+    if (!db.isOpen()) return;
+
+    QSqlQuery query(db);
+    query.setForwardOnly(true);
+
+    query.prepare("SELECT Username, IDCard, jianjie, avatar FROM users WHERE UserID = ?");
+    query.addBindValue(userID.toInt());
+
+    if (query.exec()) {
+        if (query.next()) {
+            QString username = query.value(0).toString();
+            QString idCard = query.value(1).toString();
+            QString jianjie = query.value(2).toString();
+            QByteArray avatarData = query.value(3).toByteArray();
+
+            ui->txt_Username->setText(username);
+            this->currentUsername = username;
+            ui->txt_UserAccount->setText(idCard);
+            ui->txt_jianjie->setText(jianjie);
+
+            if (!avatarData.isEmpty()) {
+                QPixmap pixmap;
+                if (pixmap.loadFromData(avatarData)) {
+                    ui->label_2->setPixmap(pixmap.scaled(ui->label_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+                } else {
+                    ui->label_2->clear();
+                }
             } else {
-                qDebug() << "头像数据加载失败";
                 ui->label_2->clear();
             }
-        } else {
-            qDebug() << "头像数据为空";
-            ui->label_2->clear();
         }
+        query.finish(); // 成功时关闭
     } else {
-        QString errorMsg = query.lastError().text();
-        if (errorMsg.isEmpty()) {
-            errorMsg = "无法找到该用户信息，UserID可能不存在";
-        }
-        qDebug() << "查询用户信息失败：" << errorMsg;
-        qDebug() << "UserID = " << userID;
-        QMessageBox::warning(this, "错误", "查询用户信息失败：\n" + errorMsg);
+        qDebug() << "getData Error:" << query.lastError().text();
+        query.finish();
     }
 }
-
+void UserProfile::on_btn_favorites_clicked()
+{
+    emit myFavoritesRequested();
+}
 =======
 #include "userprofile.h"
 #include "ui_userprofile.h"
 #include "sign_in.h"
-#include "edit_infor.h"
 #include <QMessageBox>
-#include <QSqlDatabase>
-#include <QDebug>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QPixmap>
+#include"edit_info.h"
+
+UserProfile::UserProfile(QString userID, QString username, QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::UserProfile)
+{
+    ui->setupUi(this);
+
+    // 初始化成员变量
+    this->userID = userID;
+    this->username = username;
+
+    // 初始化界面显示
+    ui->label_username->setText(username);
+}
 UserProfile::UserProfile(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::UserProfile)
@@ -157,21 +222,14 @@ UserProfile::UserProfile(QWidget *parent)
     ui->setupUi(this);
     connect(ui->btn_back, &QPushButton::clicked, this, &UserProfile::on_btn_back_clicked);
 }
-UserProfile::UserProfile(const QString &userID,QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::UserProfile)
-{
-    ui->setupUi(this);
-    this->userID=userID;
-    connect(ui->btn_back, &QPushButton::clicked, this, &UserProfile::on_btn_back_clicked);
-}
+
 UserProfile::~UserProfile()
 {
     delete ui;
 }
 void UserProfile::on_btn_back_clicked()
 {
-    emit backRequested(); // 发送信号通知主窗口切换回去
+    emit backRequested();
 }
 void UserProfile::on_pushButton_4_clicked()
 {
@@ -184,94 +242,67 @@ void UserProfile::on_pushButton_8_clicked()
 }
 void UserProfile::on_pushButton_7_clicked()
 {
-    emit logoutRequested();
-}
-void UserProfile::on_pushButton_9_clicked()
-{
-    int ret = QMessageBox::question(this, "注销", "确定要退出登录吗？",
-                                    QMessageBox::Yes | QMessageBox::No);
+    QMessageBox msgBox(QMessageBox::Question, "取消登录", "确定要退出登录吗？",
+                       QMessageBox::Yes | QMessageBox::No, this);
+
+    msgBox.setStyleSheet(
+        "QMessageBox {"
+        "    background-color: white;"
+        "}"
+        "QLabel {"
+        "    color: black; "
+        "}"
+        "QPushButton {"
+        "    min-width: 80px; "
+        "   color:black;"
+        "   background-color:white;"
+        "   border: 1px solid black; "
+        "}"
+        );
+    int ret = msgBox.exec();
+
     if (ret == QMessageBox::Yes) {
         emit logoutRequested();
     }
 }
-
-void UserProfile::on_pushButton_5_clicked()
+void UserProfile::on_pushButton_9_clicked()
 {
-    edit_infor *e=new edit_infor(ui->txt_UserAccount->text(),ui->txt_Username->text(),this);
-    connect(e,&edit_infor::change_name,this,[this](QString old,QString name){
-        if (name==""){
-            ui->txt_Username->setText(old);
-        }else{
-            ui->txt_Username->setText(name);
-        }
+    QMessageBox msgBox(QMessageBox::Question, "注销", "确定要注销吗？",
+                       QMessageBox::Yes | QMessageBox::No, this);
 
-    });
-    connect(e,&edit_infor::change_jianjie,this,[this](QString old,QString jianjie){
-        if (jianjie==""){
-            ui->txt_jianjie->setText(old);
-        }else{
-            ui->txt_jianjie->setText(jianjie);
-        }
-    });
-    connect(e,&edit_infor::change_avatar,this,[this](QPixmap pixmap){
-        ui->label_2->setPixmap(pixmap);
-    });
-    connect(e, &QDialog::finished, this, [this]{
-        this->show();
-        if (!this->userID.isEmpty()) {
-            getData(this->userID);
-        }
-    });
-    this->hide();
-    e->exec();
-}
-void UserProfile::getData(const QString &userID)
-{
-    qDebug() << "getData called with userID:" << userID;
-    if (userID.isEmpty()) {
-        qDebug() << "UserID is empty!";
-        return;
-    }
-    QSqlDatabase db = QSqlDatabase::database();
-    if (!db.isOpen()) {
-        QMessageBox::warning(this, "错误", "数据库未连接！");
-        qDebug() << "数据库未连接！";
-        return;
-    }
-    QSqlQuery query(db);  // 显式指定数据库连接
-    query.prepare("SELECT Username, IDCard, jianjie,avatar FROM users WHERE UserID = ?");
-    query.addBindValue(userID);
-    qDebug() << "查询用户信息，UserID=" << userID;
-    if (query.exec() && query.next()) {
-        QString username = query.value(0).toString();
-        QString idCard = query.value(1).toString();
-        QString jianjie = query.value(2).toString();
-        QByteArray avatarData = query.value(3).toByteArray();
-        qDebug() << "读取到头像数据大小：" << avatarData.size() << "字节";
-        ui->txt_Username->setText(username);
-        ui->txt_UserAccount->setText(idCard);
-        ui->txt_jianjie->setText(jianjie);
-        if (!avatarData.isEmpty()) {
-            QPixmap pixmap;
-            if (pixmap.loadFromData(avatarData)) {
-                qDebug() << "成功加载头像，尺寸：" << pixmap.width() << "x" << pixmap.height();
-                ui->label_2->setPixmap(pixmap.scaled(ui->label_2->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
-            } else {
-                qDebug() << "头像数据加载失败";
-                ui->label_2->clear();
-            }
-        } else {
-            qDebug() << "头像数据为空";
-            ui->label_2->clear();
-        }
-    } else {
-        QString errorMsg = query.lastError().text();
-        if (errorMsg.isEmpty()) {
-            errorMsg = "无法找到该用户信息，UserID可能不存在";
-        }
-        qDebug() << "查询用户信息失败：" << errorMsg;
-        qDebug() << "UserID = " << userID;
-        QMessageBox::warning(this, "错误", "查询用户信息失败：\n" + errorMsg);
+    msgBox.setStyleSheet(
+        "QMessageBox {"
+        "    background-color: white;"
+        "}"
+        "QLabel {"
+        "    color: black; "
+        "}"
+        "QPushButton {"
+        "    min-width: 80px;"
+        "   color:black;"
+        "   background-color:white; "
+        "   border: 1px solid black;"
+        "}"
+        );
+    int ret = msgBox.exec();
+
+    if (ret == QMessageBox::Yes) {
+        emit logoutRequested();
     }
 }
->>>>>>> 269024b (完全修复了更换头像功能)
+void UserProfile::on_edit_btn_clicked(){
+    edit_info* editDlg=new edit_info(this->userID,this->username,this);
+    connect(editDlg, &edit_info::change_name, this, [=](QString newName){
+        ui->label_username->setText(newName); // 更新界面标签
+        this->username = newName;             // 更新本地成员变量
+    });
+    connect(editDlg, &edit_info::change_jianjie, this, [=](QString newJianjie){
+        ui->label_jianjie->setText(newJianjie); // 假设你有显示简介的 label
+    });
+    editDlg->exec();
+    delete editDlg;
+}
+void UserProfile::on_pushButton_2_clicked(){
+    emit myFavoritesRequested();
+}
+>>>>>>> 8baf20252257e6424a56f672cef2e41d0128f62f

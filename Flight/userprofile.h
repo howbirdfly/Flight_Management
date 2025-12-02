@@ -1,4 +1,4 @@
-
+<<<<<<< HEAD
 #ifndef USERPROFILE_H
 #define USERPROFILE_H
 
@@ -14,17 +14,21 @@ class UserProfile : public QWidget
 
 public:
     QString userID;
+    QString username;
     explicit UserProfile(QWidget *parent = nullptr);
-    explicit UserProfile(const QString &username,QWidget *parent = nullptr);
+    // 修复：修改构造函数参数，去掉多余的 username 参数，匹配 Deal::Deal 中的调用
     explicit UserProfile(const QString &userID, QWidget *parent = nullptr);
     ~UserProfile();
 
 public slots:
-    void getData(const QString &username);
+    void getData(const QString &userID);
+
 signals:
-    void backRequested(); // 定义返回信号
+    void backRequested();
     void myOrdersRequested();
     void logoutRequested();
+    void myFavoritesRequested();
+
 private slots:
     void on_btn_back_clicked();
     void on_pushButton_4_clicked(); // 我的订单
@@ -32,14 +36,54 @@ private slots:
     void on_pushButton_7_clicked(); // 登录
     void on_pushButton_9_clicked(); // 注销
     void on_pushButton_10_clicked();//增加乘客
-
     void on_pushButton_5_clicked();//编辑个人资料
+    void on_btn_favorites_clicked();//收藏
 
 private:
     Ui::UserProfile *ui;
     QString currentUsername;
-
 };
 
 #endif // USERPROFILE_H
+=======
+#ifndef USERPROFILE_H
+#define USERPROFILE_H
 
+#include <QWidget>
+#include"edit_info.h"
+
+namespace Ui {
+class UserProfile;
+}
+
+class UserProfile : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit UserProfile(QWidget *parent = nullptr);
+    explicit UserProfile(QString userID, QString username, QWidget *parent = nullptr);
+    ~UserProfile();
+
+signals:
+    void backRequested();
+    void myOrdersRequested();
+    void logoutRequested();
+    void myFavoritesRequested();
+private slots:
+    void on_btn_back_clicked();
+    void on_pushButton_2_clicked();//收藏
+    void on_pushButton_4_clicked(); // 我的订单
+    void on_pushButton_8_clicked(); // 注册
+    void on_pushButton_7_clicked(); // 登录
+    void on_pushButton_9_clicked(); // 注销
+    void on_edit_btn_clicked();//编辑个人信息
+
+private:
+    Ui::UserProfile *ui;
+    QString userID;
+    QString username;
+};
+
+#endif // USERPROFILE_H
+>>>>>>> 8baf20252257e6424a56f672cef2e41d0128f62f

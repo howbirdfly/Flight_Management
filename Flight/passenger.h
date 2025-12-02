@@ -1,14 +1,14 @@
 #ifndef PASSENGER_H
 #define PASSENGER_H
 
-#include <QDockWidget>  // 改为 QDockWidget
+#include <QDockWidget>
 #include <QSqlDatabase>
 
 namespace Ui {
 class passenger;
 }
 
-class passenger : public QDockWidget  // 改为继承 QDockWidget
+class passenger : public QDockWidget
 {
     Q_OBJECT
 

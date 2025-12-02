@@ -395,13 +395,18 @@ QTableView QPushButton {
        <string>操作</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>收藏</string>
+      </property>
+     </column>
     </widget>
     <widget class="QPushButton" name="home">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>620</y>
-       <width>331</width>
+       <width>241</width>
        <height>71</height>
       </rect>
      </property>
@@ -434,9 +439,9 @@ QPushButton:pressed {
     <widget class="QPushButton" name="Deal_2">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>250</x>
        <y>620</y>
-       <width>331</width>
+       <width>241</width>
        <height>71</height>
       </rect>
      </property>
@@ -469,9 +474,9 @@ QPushButton:pressed {
     <widget class="QPushButton" name="Single_Center">
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>730</x>
        <y>620</y>
-       <width>321</width>
+       <width>261</width>
        <height>71</height>
       </rect>
      </property>
@@ -499,6 +504,41 @@ QPushButton:pressed {
      </property>
      <property name="text">
       <string>个人中心</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="favorite_button">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>620</y>
+       <width>241</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #606060;
+    border:1px solid white;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+	border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+     </property>
+     <property name="text">
+      <string>收藏</string>
      </property>
     </widget>
    </widget>
@@ -904,13 +944,18 @@ QTableView QPushButton {
        <string>操作</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>收藏</string>
+      </property>
+     </column>
     </widget>
     <widget class="QPushButton" name="home">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>620</y>
-       <width>331</width>
+       <width>251</width>
        <height>71</height>
       </rect>
      </property>
@@ -943,9 +988,9 @@ QPushButton:pressed {
     <widget class="QPushButton" name="Deal_2">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>260</x>
        <y>620</y>
-       <width>331</width>
+       <width>251</width>
        <height>71</height>
       </rect>
      </property>
@@ -978,9 +1023,9 @@ QPushButton:pressed {
     <widget class="QPushButton" name="Single_Center">
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>750</x>
        <y>620</y>
-       <width>321</width>
+       <width>241</width>
        <height>71</height>
       </rect>
      </property>
@@ -1010,10 +1055,45 @@ QPushButton:pressed {
       <string>个人中心</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="favorite_button">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>620</y>
+       <width>241</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #606060;
+    border:1px solid white;
+    padding: 8px 16px;
+    color: white;
+    font-size: 14px;
+    box-shadow: inset 2px 2px 4px #484848, 
+                inset -2px -2px 4px #787878;
+	border-radius: 6px;
+}
+
+QPushButton:hover {
+    background-color: #646464;
+}
+
+QPushButton:pressed {
+    background-color: #5c5c5c;
+    box-shadow: inset 3px 3px 6px #404040, 
+                inset -3px -3px 6px #787878;
+}</string>
+     </property>
+     <property name="text">
+      <string>收藏</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
  <resources/>
  <connections/>
 </ui>
->>>>>>> 424bc0a8b89776bc4a6d5328940fb4156ce50bcf
+>>>>>>> 8baf20252257e6424a56f672cef2e41d0128f62f

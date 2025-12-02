@@ -42,6 +42,7 @@ template <> constexpr inline auto Single_Center::qt_create_metaobjectdata<qt_met
         "backRequested",
         "",
         "onCancelOrder",
+        "onDeleteOrder",
         "onViewOrder",
         "on_btn_back_clicked"
     };
@@ -51,10 +52,12 @@ template <> constexpr inline auto Single_Center::qt_create_metaobjectdata<qt_met
         QtMocHelpers::SignalData<void()>(1, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'onCancelOrder'
         QtMocHelpers::SlotData<void()>(3, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onViewOrder'
+        // Slot 'onDeleteOrder'
         QtMocHelpers::SlotData<void()>(4, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_btn_back_clicked'
+        // Slot 'onViewOrder'
         QtMocHelpers::SlotData<void()>(5, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_btn_back_clicked'
+        QtMocHelpers::SlotData<void()>(6, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -80,8 +83,9 @@ void Single_Center::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         switch (_id) {
         case 0: _t->backRequested(); break;
         case 1: _t->onCancelOrder(); break;
-        case 2: _t->onViewOrder(); break;
-        case 3: _t->on_btn_back_clicked(); break;
+        case 2: _t->onDeleteOrder(); break;
+        case 3: _t->onViewOrder(); break;
+        case 4: _t->on_btn_back_clicked(); break;
         default: ;
         }
     }
@@ -110,14 +114,14 @@ int Single_Center::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }
